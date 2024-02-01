@@ -108,10 +108,14 @@ export class FormSinhVien extends Component {
     };
 
     componentDidUpdate(prevProps) {
-        if (this.props.sinhVienDangSua && prevProps.sinhVienDangSua !== this.props.sinhVienDangSua) {
-            this.setState({
-                values: this.props.sinhVienDangSua,
-            });
+        if (prevProps.sinhVienDangSua !== this.props.sinhVienDangSua) {
+            if (this.props.sinhVienDangSua) {
+                this.setState({
+                    values: this.props.sinhVienDangSua,
+                });
+            } else {
+                this.resetForm();
+            }
         }
     }
     render() {
