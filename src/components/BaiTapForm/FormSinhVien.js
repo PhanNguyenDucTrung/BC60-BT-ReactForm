@@ -41,6 +41,12 @@ export class FormSinhVien extends Component {
             if (!regexEmail.test(value)) {
                 errorMessage = name + ' không đúng định dạng !';
             }
+            // Kiểm tra email đã tồn tại
+            const { mangSinhVien } = this.props;
+            const emailExists = mangSinhVien.some(sinhVien => sinhVien.email === value);
+            if (emailExists && !this.props.sinhVienDangSua) {
+                errorMessage = 'Email đã tồn tại !';
+            }
         }
 
         // Kiểm tra số điện thoại
@@ -104,7 +110,15 @@ export class FormSinhVien extends Component {
 
     resetForm = () => {
         // Reset form
-        this.setState({ values: { maSV: '', hoTen: '', soDienThoai: '', email: '' } });
+        this.setState({
+            values: { maSV: '', hoTen: '', soDienThoai: '', email: '' },
+            errors: { maSV: '', hoTen: '', soDienThoai: '', email: '' },
+        });
+    };
+
+    handleCancel = () => {
+        this.props.resetSinhVienDangSua();
+        this.resetForm();
     };
 
     componentDidUpdate(prevProps) {
@@ -112,6 +126,7 @@ export class FormSinhVien extends Component {
             if (this.props.sinhVienDangSua) {
                 this.setState({
                     values: this.props.sinhVienDangSua,
+                    errors: { maSV: '', hoTen: '', soDienThoai: '', email: '' },
                 });
             } else {
                 this.resetForm();
@@ -186,10 +201,7 @@ export class FormSinhVien extends Component {
                                                 <button
                                                     type='button'
                                                     className='btn btn-primary'
-                                                    onClick={() => {
-                                                        this.props.resetSinhVienDangSua();
-                                                        this.resetForm();
-                                                    }}>
+                                                    onClick={this.handleCancel}>
                                                     Cancel
                                                 </button>
                                                 <button type='submit' className='btn btn-success ml-2'>
@@ -206,10 +218,7 @@ export class FormSinhVien extends Component {
                                             <button
                                                 type='button'
                                                 className='btn btn-primary'
-                                                onClick={() => {
-                                                    this.props.resetSinhVienDangSua();
-                                                    this.resetForm();
-                                                }}>
+                                                onClick={this.handleCancel}>
                                                 Cancel
                                             </button>
                                             <button disabled className='btn btn-danger ml-2'>
