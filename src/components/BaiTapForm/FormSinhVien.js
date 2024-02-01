@@ -183,7 +183,13 @@ export class FormSinhVien extends Component {
                                     {this.state.valid ? (
                                         this.props.sinhVienDangSua ? (
                                             <>
-                                                <button type='button' className='btn btn-primary '>
+                                                <button
+                                                    type='button'
+                                                    className='btn btn-primary'
+                                                    onClick={() => {
+                                                        this.props.resetSinhVienDangSua();
+                                                        this.resetForm();
+                                                    }}>
                                                     Cancel
                                                 </button>
                                                 <button type='submit' className='btn btn-success ml-2'>
