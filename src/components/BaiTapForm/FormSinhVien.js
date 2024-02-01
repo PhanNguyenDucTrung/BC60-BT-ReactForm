@@ -37,7 +37,7 @@ export class FormSinhVien extends Component {
         // Kiểm tra email
         if (name === 'email') {
             // Nếu là email thì kiểm tra định dạng email
-            const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+            const regexEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
             if (!regexEmail.test(value)) {
                 errorMessage = name + ' không đúng định dạng !';
             }
